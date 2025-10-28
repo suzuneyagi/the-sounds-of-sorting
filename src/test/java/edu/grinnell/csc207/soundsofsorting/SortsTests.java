@@ -1,12 +1,16 @@
 package edu.grinnell.csc207.soundsofsorting;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
 
 import org.junit.jupiter.api.Test;
 
 import edu.grinnell.csc207.soundsofsorting.sorts.Sorts;
+import edu.grinnell.csc207.soundsofsorting.sortevents.SortEvent;
 
 public class SortsTests {
     /**
@@ -120,5 +124,15 @@ public class SortsTests {
         testSort_empty(Sorts::shellSort);
         testSort_short(Sorts::shellSort);
         testSort_long(Sorts::shellSort);
+    }
+
+    @Test
+    public void testEventSort() {// Returns a list of events
+        Integer[] arr = makeTestArray3();
+        Integer[] arrCopied = Arrays.copyOf(arr, arr.length);
+        List<SortEvent<Integer>> eventList = Sorts.shellSort(arr);
+        Sorts.eventSort(arrCopied, eventList);
+        assertEquals("[1, 2, 3, 4, 5]", Arrays.toString(arrCopied));
+        assertTrue(sorted(arrCopied));
     }
 }

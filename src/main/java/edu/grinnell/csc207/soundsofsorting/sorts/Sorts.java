@@ -51,7 +51,7 @@ public class Sorts {
     }
 
     /**
-     * Sorts the array according to the selection sort algorithm:
+     * Sorts the array according to the selection sort algorithm.
      * <pre>
      * [ i smallest elements in order | unprocessed ]
      * </pre>
@@ -62,14 +62,12 @@ public class Sorts {
     public static <T extends Comparable<? super T>> List<SortEvent<T>> selectionSort(
             T[] arr) {
                 List<SortEvent<T>> events = new ArrayList<>();
-
                 for (int j = 0; j < arr.length - 1; j++) {
                     T min = arr[j];
                     int minIndex = j;
                     for (int i = j + 1; i < arr.length; i++) {
                         events.add(new CompareEvent<T>(minIndex, i));
                         if (min.compareTo(arr[i]) > 0) {
-                            events.add(new CopyEvent<T>(min, j));
                             min = arr[i];
                             minIndex = i;
                         }
@@ -168,7 +166,7 @@ public class Sorts {
     public static <T extends Comparable<? super T>> List<SortEvent<T>> quickSort(T[] arr) {
         List<SortEvent<T>> events = new ArrayList<>();
         quickSortHelper(arr, 0, arr.length - 1, events);
-        return null;
+        return events;
     }
 
     private static <T extends Comparable<? super T>> void quickSortHelper(T[] arr, int start, int end, List<SortEvent<T>> events) {
@@ -183,15 +181,15 @@ public class Sorts {
         T pivot = arr[end];
         int i = start - 1;
         for (int j = start; j < end; j++) {
-            events.add(new CompareEvent<>(j, end));
+            events.add(new CompareEvent<T>(j, end));
             if (arr[j].compareTo(pivot) < 0) {
                 i++;
-                events.add(new SwapEvent<>(i, j));
+                events.add(new SwapEvent<T>(i, j));
                 swap(arr, i, j);
             }
         }
         i++;
-        events.add(new SwapEvent<>(i, end));
+        events.add(new SwapEvent<T>(i, end));
         swap(arr, i, end);
         return i;
     }
@@ -210,17 +208,35 @@ public class Sorts {
                         T temp = arr[i];
                         int j = i;
                         while (j >= gap) {
-                            events.add(new CompareEvent<>(j - gap, i));
+                            events.add(new CompareEvent<T>(j - gap, i));
                             if (arr[j - gap].compareTo(temp) > 0) {
-                                events.add(new CopyEvent<>(arr[j - gap], j));
+                                events.add(new CopyEvent<T>(arr[j - gap], j));
                                 arr[j] = arr[j - gap];
                                 j -= gap;
                             } else {
                                 break;
                             }
                         }
+                        events.add(new CopyEvent<T>(temp, j));
+                        arr[j] = temp;
                     }
                 }
                 return events;
+    }
+    
+    /**
+     * Given an array of Ts and list of SortEvent<T> objects, apply those events to the list in-order.
+     * @param <T> 
+     * @param l an array of Ts
+     * @param events a list of SortEvent<T> objects
+     */
+    public static <T> void eventSort(T[] l, List<SortEvent<T>> events) {
+        if (l == null || events == null) {
+            return;
+        } else {
+            for (SortEvent<T> event : events) {
+                event.apply(l);
             }
+        }
+    }
 }
