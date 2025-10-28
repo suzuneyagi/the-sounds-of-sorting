@@ -7,7 +7,7 @@ import java.util.List;
  * A <code>CompareEvent</code> logs a comparison a sort makes between two
  * indices in the array.
  */
-public class CompareEvent<T> {
+public class CompareEvent<T> implements SortEvent<T> {
      private int i, j;
 
     /**
@@ -24,6 +24,7 @@ public class CompareEvent<T> {
      * Does nothing
      * @param arr the array to modify
      */
+    @Override
     public void apply(T[] arr) {
     }
 
@@ -31,6 +32,7 @@ public class CompareEvent<T> {
      * Returns a list containing all the indices that this event affects.
      * @return a list of indices affected in the event
      */
+    @Override
     public List<Integer> getAffectedIndices() {
         List<Integer> indices = Arrays.asList(i, j);
         return indices;
@@ -40,6 +42,7 @@ public class CompareEvent<T> {
      * Shows that compare events are not emphasized
      * @return false
      */
+    @Override
     public boolean isEmphasized() {
         return false;
     }

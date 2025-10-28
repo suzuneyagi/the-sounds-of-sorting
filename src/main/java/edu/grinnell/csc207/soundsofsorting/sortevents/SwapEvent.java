@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * A <code>SwapEvent</code> logs a swap between two indices of the array.
  */
-public class SwapEvent<T> {
+public class SwapEvent<T> implements SortEvent<T> {
     private int i, j;
 
     /**
@@ -24,6 +24,7 @@ public class SwapEvent<T> {
      * Swaps the recorded indices of the array
      * @param arr the array to modify
      */
+    @Override
     public void apply(T[] arr) {
         T temp = arr[i];
         arr[i] = arr[j];
@@ -34,6 +35,7 @@ public class SwapEvent<T> {
      * Returns a list containing all the indices that this event affects.
      * @return a list of indices affected in the event
      */
+    @Override
     public List<Integer> getAffectedIndices() {
         List<Integer> indices = Arrays.asList(i, j);
         return indices;
@@ -43,6 +45,7 @@ public class SwapEvent<T> {
      * Shows that swap events are emphasized
      * @return true
      */
+    @Override
     public boolean isEmphasized() {
         return true;
     }
