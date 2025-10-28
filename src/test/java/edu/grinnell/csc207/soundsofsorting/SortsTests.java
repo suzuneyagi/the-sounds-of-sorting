@@ -127,12 +127,56 @@ public class SortsTests {
     }
 
     @Test
-    public void testEventSort() {// Returns a list of events
-        Integer[] arr = makeTestArray3();
+    public void testEventSortInsertion() {
+        Integer[] arr = makeTestArray1();
+        Integer[] arrCopied = Arrays.copyOf(arr, arr.length);
+        List<SortEvent<Integer>> eventList = Sorts.insertionSort(arr);
+        Sorts.eventSort(arrCopied, eventList);
+        assertTrue(sorted(arrCopied));
+    }
+
+    @Test
+    public void testEventSortSelection() {
+        Integer[] arr = makeTestArray1();
+        Integer[] arrCopied = Arrays.copyOf(arr, arr.length);
+        List<SortEvent<Integer>> eventList = Sorts.selectionSort(arr);
+        Sorts.eventSort(arrCopied, eventList);
+        assertTrue(sorted(arrCopied));
+    }
+
+    @Test
+    public void testEventSortBubble() {
+        Integer[] arr = makeTestArray1();
+        Integer[] arrCopied = Arrays.copyOf(arr, arr.length);
+        List<SortEvent<Integer>> eventList = Sorts.bubbleSort(arr);
+        Sorts.eventSort(arrCopied, eventList);
+        assertTrue(sorted(arrCopied));
+    }
+
+    @Test
+    public void testEventSortMerge() {
+        Integer[] arr = makeTestArray1();
+        Integer[] arrCopied = Arrays.copyOf(arr, arr.length);
+        List<SortEvent<Integer>> eventList = Sorts.mergeSort(arr);
+        Sorts.eventSort(arrCopied, eventList);
+        assertTrue(sorted(arrCopied));
+    }
+
+    @Test
+    public void testEventSortQuick() {
+        Integer[] arr = makeTestArray1();
+        Integer[] arrCopied = Arrays.copyOf(arr, arr.length);
+        List<SortEvent<Integer>> eventList = Sorts.quickSort(arr);
+        Sorts.eventSort(arrCopied, eventList);
+        assertTrue(sorted(arrCopied));
+    }
+
+    @Test
+    public void testEventSortShell() {
+        Integer[] arr = makeTestArray1();
         Integer[] arrCopied = Arrays.copyOf(arr, arr.length);
         List<SortEvent<Integer>> eventList = Sorts.shellSort(arr);
         Sorts.eventSort(arrCopied, eventList);
-        assertEquals("[1, 2, 3, 4, 5]", Arrays.toString(arrCopied));
         assertTrue(sorted(arrCopied));
     }
 }
