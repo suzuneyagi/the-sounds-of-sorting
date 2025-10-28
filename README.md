@@ -1,6 +1,6 @@
 # CSC 207: The Sounds of Sorting
 
-Author: _(TODO: insert your name here!)_
+Author: Suzune Yagi
 
 ## Resources
 

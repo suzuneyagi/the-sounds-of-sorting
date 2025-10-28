@@ -23,7 +23,7 @@ public class SortsTests {
         return true;
     }
 
-    public static Integer[] makeTestArray() {
+    public static Integer[] makeTestArray1() {
         return new Integer[] {
             3, 7, 9, 1, 2,
             18, 16, 15, 19, 8,
@@ -32,8 +32,44 @@ public class SortsTests {
         };
     }
 
+    public static Integer[] makeTestArray2() {
+        return new Integer[] {
+        };
+    }
+
+    public static Integer[] makeTestArray3() {
+        return new Integer[] {
+            5, 4, 3, 2, 1
+        };
+    }
+
+    public static Integer[] makeTestArray4() {
+        return new Integer[] {
+            14, 1, 2, 3, 4, 5, 6, 7, 8,
+            9, 10, 11, 12, 13
+        };
+    }
+
     public void testSort(Consumer<Integer[]> func) {
-        Integer[] arr = makeTestArray();
+        Integer[] arr = makeTestArray1();
+        func.accept(arr);
+        assertTrue(sorted(arr));
+    }
+
+    public void testSort_empty(Consumer<Integer[]> func) {
+        Integer[] arr = makeTestArray2();
+        func.accept(arr);
+        assertTrue(sorted(arr));
+    }
+
+    public void testSort_short(Consumer<Integer[]> func) {
+        Integer[] arr = makeTestArray3();
+        func.accept(arr);
+        assertTrue(sorted(arr));
+    }
+
+    public void testSort_long(Consumer<Integer[]> func) {
+        Integer[] arr = makeTestArray4();
         func.accept(arr);
         assertTrue(sorted(arr));
     }
@@ -41,25 +77,48 @@ public class SortsTests {
     @Test
     public void testBubbleSort() {
         testSort(Sorts::bubbleSort);
+        testSort_empty(Sorts::bubbleSort);
+        testSort_short(Sorts::bubbleSort);
+        testSort_long(Sorts::bubbleSort);
     }
     
     @Test
     public void testInsertionSort() {
         testSort(Sorts::insertionSort);
+        testSort_empty(Sorts::insertionSort);
+        testSort_short(Sorts::insertionSort);
+        testSort_long(Sorts::bubbleSort);
     }
     
     @Test
     public void testSelectionSort() {
         testSort(Sorts::selectionSort);
+        testSort_empty(Sorts::selectionSort);
+        testSort_short(Sorts::selectionSort);
+        testSort_long(Sorts::selectionSort);
     }
 
     @Test
     public void testMergeSort() {
         testSort(Sorts::mergeSort);
+        testSort_empty(Sorts::mergeSort);
+        testSort_short(Sorts::mergeSort);
+        testSort_long(Sorts::mergeSort);
     }
     
     @Test
     public void testQuickSort() {
         testSort(Sorts::quickSort);
+        testSort_empty(Sorts::quickSort);
+        testSort_short(Sorts::quickSort);
+        testSort_long(Sorts::quickSort);
+    }
+
+    @Test
+    public void testShellSort() {
+        testSort(Sorts::shellSort);
+        testSort_empty(Sorts::shellSort);
+        testSort_short(Sorts::shellSort);
+        testSort_long(Sorts::shellSort);
     }
 }
