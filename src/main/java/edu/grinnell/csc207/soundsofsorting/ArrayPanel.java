@@ -38,9 +38,12 @@ public class ArrayPanel extends JPanel {
                 heightRec = 5;
             }
 
+            g.setColor(Color.BLACK);
+            g.drawRect(widthRec * i, height - heightRec, widthRec, heightRec);
+
             // Change color when highlighted
             if (notes.isHighlighted(i)) {
-                g.setColor(Color.green);
+                g.setColor(Color.red);
             } else {
                 g.setColor(Color.cyan);
             }
