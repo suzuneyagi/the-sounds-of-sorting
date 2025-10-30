@@ -1,7 +1,6 @@
 package edu.grinnell.csc207.soundsofsorting;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
 import java.util.List;

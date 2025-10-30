@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -51,6 +53,8 @@ public class ControlPanel extends JPanel {
                 return Sorts.mergeSort(arr);
             case("Quick"):
                 return Sorts.quickSort(arr);
+            case("Shell"):
+                return Sorts.shellSort(arr);
             default:
                 throw new IllegalArgumentException("generateEvents");
         }
@@ -100,7 +104,8 @@ public class ControlPanel extends JPanel {
             "Insertion",
             "Bubble",
             "Merge",
-            "Quick"
+            "Quick",
+            "Shell"
         });
         add(sorts);
         
@@ -135,10 +140,15 @@ public class ControlPanel extends JPanel {
                 }
                 isSorting = true;
                 
-                // TODO: fill me in!
                 // 1. Create the sorting events list
                 // 2. Add in the compare events to the end of the list
-                List<SortEvent<Integer>> events = new java.util.LinkedList<>();
+                String sortAlgorithm = (String) sorts.getSelectedItem();
+                Integer[] arr = Arrays.copyOf(notes.getNotes(), notes.getNotes().length);
+
+                List<SortEvent<Integer>> events = generateEvents(sortAlgorithm, arr);
+
+                String scaleString = (String) scales.getSelectedItem();
+                scale = generateScale(scaleString);
                 
                 // NOTE: The Timer class repetitively invokes a method at a
                 //       fixed interval.  Here we are specifying that method
@@ -153,14 +163,26 @@ public class ControlPanel extends JPanel {
                     public void run() {
                         if (index < events.size()) {
                             SortEvent<Integer> e = events.get(index++);
-                            // TODO: fill me in!
+                            List<Integer> indices = e.getAffectedIndices();
+
                             // 1. Apply the next sort event.
-                            // 3. Play the corresponding notes denoted by the
+                            e.apply(notes.getNotes());
+                            notes.clearAllHighlighted();
+
+                            // 2. Play the corresponding notes denoted by the
                             //    affected indices logged in the event.
-                            // 4. Highlight those affected indices.
+                            for (int index : indices) {
+                                scale.playNote(index, notes.isHighlighted(index));
+                            }
+
+                            // 3. Highlight those affected indices.
+                            for (int index : indices) {
+                                notes.highlightNote(index);
+                            }
                             panel.repaint();
                         } else {
                             this.cancel();
+                            notes.clearAllHighlighted();
                             panel.repaint();
                             isSorting = false;
                         }

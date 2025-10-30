@@ -126,6 +126,14 @@ public class Sorts {
                 return events;
     }
 
+    /**
+     * Helper function for merge sort that recursively sorts the array.
+     * @param <T> the carrier type of the array
+     * @param arr the array to sort
+     * @param left left side of arr to be sorted
+     * @param right right side of arr to be sorted
+     * @param events records evnets (swap, compare, and copy)
+     */
     public static <T extends Comparable<? super T>> void mergeHelper(T[] arr, T[] left, T[] right, List<SortEvent<T>> events) {
         int leftIndex = 0;
         int rightIndex = 0;
@@ -169,6 +177,14 @@ public class Sorts {
         return events;
     }
 
+    /**
+     * Helper function for quick sort that recursively sorts the array.
+     * @param <T> the carrier type of the array
+     * @param arr the array to sort
+     * @param start the index of the first element of arr
+     * @param end the index of the last element of arr
+     * @param events records evnets (swap, compare, and copy)
+     */
     private static <T extends Comparable<? super T>> void quickSortHelper(T[] arr, int start, int end, List<SortEvent<T>> events) {
         if(end > start){
             int pivotIndex = partition(arr, start, end, events);
@@ -177,6 +193,15 @@ public class Sorts {
         }
     }
 
+    /**
+     * Execute partition to the array
+     *  @param <T> the carrier type of the array
+     * @param arr the array to sort
+     * @param start the index of the first element of arr
+     * @param end the index of the last element of arr
+     * @param events records evnets (swap, compare, and copy)
+     * @return the index of the pivot
+     */
     private static <T extends Comparable<? super T>> int partition(T[] arr, int start, int end, List<SortEvent<T>> events) {
         T pivot = arr[end];
         int i = start - 1;
